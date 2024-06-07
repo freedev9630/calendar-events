@@ -1,0 +1,14 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    background-color: beige;
+    align-items: center;
+
+    a {
+        cursor: pointer;
+    }
+
+    img {
+        height: 3rem;
+    }
+}

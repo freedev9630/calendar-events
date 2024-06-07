@@ -1,0 +1,42 @@
+<section class="calendar-container">
+    <button mat-button color="primary" (click)="openModal()">Agregar evento</button>
+
+    <article class="calendar-content">
+        @for (header of headers; track header) {
+            <span class="calendar-header">{{header}}</span>
+        }
+
+        @for (item of calendarData; let calendarIndex = $index; track item) {
+            <div class="calendar-body" [ngClass]="[ item.isCurrentMonth ? 'current-month' : '',  item.isCurrentDay ? 'current-day' : '']">
+                <span>{{item.day}}</span>
+                <section>
+                    @for (event of item.events; let eventIndex = $index; track event) {
+                        <button
+                            class="event"
+                            [matTooltip]="event.name" [matMenuTriggerFor]="menu"
+                            [ngStyle]="{'background-color': event.background, 'color': event.color}"
+                            >
+                            <mat-icon>{{event.icon}}</mat-icon>
+                            <p>{{event.name}}</p>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <section class="menu-container">
+                                <button class="event" [matTooltip]="event.name" [ngStyle]="{'background-color': event.background, 'color': event.color}">
+                                    <mat-icon>{{event.icon}}</mat-icon>
+                                    <p>{{event.name}}</p>
+                                </button>
+                                <p>Fecha: {{event.date | date : 'YYYY/MM/dd'}}</p>
+                                <div>
+                                    <button mat-button color="primary" (click)="openModalEdit(event)">Editar</button>
+                                    <button mat-button color="warn" (click)="removeEvent(calendarIndex, eventIndex)">Eliminar</button>
+                                </div>
+                            </section>
+                        </mat-menu>
+
+                    }
+                </section>
+            </div>
+        }
+
+    </article>
+</section>

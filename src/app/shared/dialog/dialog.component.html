@@ -1,0 +1,55 @@
+<h2 mat-dialog-title>Crear evento</h2>
+<mat-dialog-content>
+  <form [formGroup]="formEvent">
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Tipo de evento</mat-label>
+      <mat-select formControlName="icon">
+        @for (event of eventType; track event) {
+          <mat-option [value]="event.id">{{event.value}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Fecha</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="date" [min]="minDate" [max]="maxDate">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <div></div>
+    <section>
+      <mat-label>Color de fondo</mat-label>
+      <ngx-colors 
+      ngx-colors-trigger 
+      formControlName="background"
+      [format] = "'hex'"
+    ></ngx-colors>
+    </section>
+    <section>
+      <mat-label>Color</mat-label>
+      <ngx-colors 
+      ngx-colors-trigger 
+      formControlName="color"
+      [format] = "'hex'"
+    ></ngx-colors>
+    </section>
+  </form>
+  <section class="preview">
+    <button
+      class="event"
+      [matTooltip]="formEvent.value.name"
+      [ngStyle]="{'background-color': formEvent.value.background, 'color': formEvent.value.color}"
+      >
+      <mat-icon>{{formEvent.value.icon}}</mat-icon>
+      <p>{{formEvent.value.name}}</p>
+    </button>
+  </section>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-button cdkFocusInitial color="primary" (click)="save()" [disabled]="formEvent.invalid">Guardar</button>
+</mat-dialog-actions>

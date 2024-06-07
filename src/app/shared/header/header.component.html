@@ -1,0 +1,14 @@
+<header>
+    <a routerLink="">
+        <img src="https://cdn.auth0.com/manhattan/versions/1.5047.0/assets/spa.svg" alt="logo">
+    </a>
+    @if (showButtons) {
+        <section>
+            @if (isAuthenticated) {
+                <button mat-button color="warn" (click)="authService.logout()">Cerrar sesión</button>
+            } @else {
+                <button mat-button color="primary" (click)="authService.loginWithRedirect()">Iniciar sesión</button>
+            }
+        </section>
+    }
+</header>
